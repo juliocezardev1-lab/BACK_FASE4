@@ -46,3 +46,20 @@ button{
     cursor: pointer;
     border-radius: 4px;
 }
+
+table{
+    width: 100px;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td{
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th{
+    background-color: #2563eb;
+    color: white;
+}
