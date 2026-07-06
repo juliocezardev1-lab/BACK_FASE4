@@ -134,5 +134,3 @@ document.getElementById('limpar-tabela').addEventListener('click', async functio
 // assim que o usuário abre o navegador, o app busca
 // se ja há dados salvods de sessões anteriores lá no BACKEND
 renderizarTabela();
-
-
