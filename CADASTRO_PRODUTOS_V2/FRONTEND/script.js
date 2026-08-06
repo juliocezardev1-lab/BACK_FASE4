@@ -23,7 +23,7 @@ class Produto {
         return this.#preco * this.#quantidade;
     }
 
-    //Método toJSON
+    //método tojson
     toJSON() {
         return {
             nome: this.nome,
@@ -34,14 +34,14 @@ class Produto {
 }
 
 // const produtos = [];
-// MUDANÇA DE ARQUITETURA - CLIENTE-SERVIDOR
+// mudança de arquitetura - cliente-servidor
 
-// CRIAR UMA CONSTANTE COM ENDEREÇO DE API (RODANDO NO SERVIDOR)
+// criar uma constante com endereço de api (rodando no servidor)
 const API_URL = 'http://localhost:3000/produtos';
 
-// REQUISIÇÃO POST - enviar dados para o servidor
-// funcão deve serasync pois o envio, resposta trafegame pela mesma rede
-// usar await até que o servidor responda 
+// requisição post - enviar dados para o servidor
+// função deve ser async pois o envio e a resposta trafegam pela rede
+// usar await até que o servidor responda
 
 
 document.getElementById("produto-form").addEventListener('submit', async function (e) {
@@ -56,7 +56,7 @@ document.getElementById("produto-form").addEventListener('submit', async functio
 
         // produtos.push(novoProduto);
 
-        // DISPARO NA REDE: envia o produto convertido em texto JSON para o Express
+        // envio na rede: envia o produto convertido em texto json para o express
 
         const resposta = await fetch(API_URL, {
             method: 'POST',
@@ -78,8 +78,8 @@ document.getElementById("produto-form").addEventListener('submit', async functio
     }
 }); //PAREI AQUI
 
-// REQUISAÇÃO GET (buscar um servidor e desenhar tela)
-// O coração da proposta ocorre aqui
+// requisição get (buscar um servidor e desenhar tela)
+// o coração da proposta ocorre aqui
 
 async function renderizarTabela() {
 
@@ -102,11 +102,11 @@ async function renderizarTabela() {
         tabela.innerHTML = '';
         let totalAcumulado = 0;
 
-        // 2 passado por cada item retornando pelo BACKEND 
-        dadosBrutosDoServidor.forEach((dados) => {
+        // percorre cada item retornado pelo backend
+        dadosBrutosDoServidor.forEach((dados, index) => {
             const produto = new Produto(dados.nome, dados.preco, dados.quantidade);
             totalAcumulado += produto.valorTotal();
-            // desenha a linha na tabela utilizando os dados do objeto reconstruindo 
+            // desenha a linha na tabela com os dados do objeto
             const row = document.createElement('tr');
 
             row.innerHTML = `
@@ -114,40 +114,54 @@ async function renderizarTabela() {
                 <td>R$ ${produto.preco.toFixed(2)}</td>
                 <td>${produto.quantidade}</td>
                 <td>R$ ${produto.valorTotal().toFixed(2)}</td>
-                <td><button>Apagar</button><td>
+                <td><button type="button" data-index="${index}">Apagar</button></td>
             `;
+
+            const botao = row.querySelector('button');
+            botao.addEventListener('click', () => deletarProduto(index));
+
             tabela.appendChild(row);
         });
 
-        // 3 atualiza o elemento de texto com o acumulado total
+        // atualiza o texto com o valor total acumulado
         document.getElementById('total-estoque').textContent = `Total em estoque: R$ ${totalAcumulado.toFixed(2)}`;
     } catch (erro) {
         console.error("Erro ao buscar dados no servidor:", erro);
     }
 };
 
-async function deletarProduto() {
-    const 
+async function deletarProduto(index) {
+    if (index === undefined || index < 0) return;
+
+    try {
+        const resposta = await fetch(`${API_URL}/${index}`, { method: 'DELETE' });
+
+        if (!resposta.ok) {
+            throw new Error('Erro ao apagar o produto');
+        }
+
+        renderizarTabela();
+    } catch (erro) {
+        console.error('Erro ao apagar produto:', erro);
+    }
 }
 
-// REQUISIÇÃO PARA DELETE (apagar os dados em lote)
+// requisição para delete (apagar os dados em lote)
 document.getElementById('limpar-tabela').addEventListener('click', async function () {
-    if (confirm("Deseja mesmo limpar mesmo toda a tabela no servidor?")){
-        try {
-            // envia uma ordem de remoção para a API
-            await fetch(API_URL, { method: 'DELETE' });
+    try {
+        // envia uma ordem de remoção para a api
+        await fetch(API_URL, { method: 'DELETE' });
 
-            // atualiza a tabela
-            renderizarTabela();
-        } catch (erro) {
-            console.error("Erro ao limpar dados no servidor:", erro);
-        }
+        // atualiza a tabela
+        renderizarTabela();
+    } catch (erro) {
+        console.error("erro ao limpar dados no servidor:", erro);
     }
 });
 
-// INICIALIAZAÇÃO AUTOMÁTICA 
+// inicialização automática
 // assim que o usuário abre o navegador, o app busca
-// se ja há dados salvods de sessões anteriores lá no BACKEND
+// se já há dados salvos de sessões anteriores lá no backend
 renderizarTabela();
 
 
