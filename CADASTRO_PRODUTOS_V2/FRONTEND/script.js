@@ -126,6 +126,10 @@ async function renderizarTabela() {
     }
 };
 
+async function deletarProduto() {
+    const 
+}
+
 // REQUISIÇÃO PARA DELETE (apagar os dados em lote)
 document.getElementById('limpar-tabela').addEventListener('click', async function () {
     if (confirm("Deseja mesmo limpar mesmo toda a tabela no servidor?")){
