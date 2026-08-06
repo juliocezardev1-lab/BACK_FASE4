@@ -114,6 +114,7 @@ async function renderizarTabela() {
                 <td>R$ ${produto.preco.toFixed(2)}</td>
                 <td>${produto.quantidade}</td>
                 <td>R$ ${produto.valorTotal().toFixed(2)}</td>
+                <td><button>Apagar</button><td>
             `;
             tabela.appendChild(row);
         });
