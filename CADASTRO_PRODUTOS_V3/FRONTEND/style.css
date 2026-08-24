@@ -1,0 +1,75 @@
+/* deixa o fundo da página cinza claro e a fonte mais limpa */
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+/* cria uma caixa centralizada para o formulário e a tabela */
+.container{
+    max-width: 500px;
+    background: white;
+    padding: 20px;
+    margin: 50px auto;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+/* centraliza o título e muda a cor do texto */
+h1{
+    text-align: center;
+    color: #333;
+}
+
+/* organiza os campos do formulário em coluna com espaço entre eles */
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* define o espaçamento e o tamanho da fonte dos inputs e botões */
+input, button{
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* deixa os botões azuis, com texto branco e cursor em forma de mão */
+button{
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* estiliza o botão de limpar a tabela com uma cor vermelha */
+#limpar-tabela{
+    margin-top: 10px;
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* faz a tabela ocupar a largura total e remove o espaço entre as bordas */
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* adiciona borda, espaço interno e centraliza o conteúdo das células */
+th,td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+/* deixa o cabeçalho da tabela azul com texto branco */
+th {
+    background-color: #2563eb;
+    color: white;
+}
