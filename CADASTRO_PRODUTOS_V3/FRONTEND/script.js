@@ -146,6 +146,8 @@ async function renderizarTabela() {
             const row =
                 document.createElement('tr');
 
+            row.classList.add('product-row');
+
             row.innerHTML = `
                 <td>${produto.nome}</td>
                 <td>R$ ${produto.preco.toFixed(2)}</td>
@@ -167,6 +169,10 @@ async function renderizarTabela() {
             );
 
             tabela.appendChild(row);
+
+            requestAnimationFrame(() => {
+                row.classList.add('visible');
+            });
         });
 
         document
