@@ -1,11 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
+const {poll}=require('pg');
+
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+//const PORT = process.env.PORT || 3000;
 
 
 // BANCO DE DADOS
@@ -190,3 +193,16 @@ app.listen(PORT, () => {
         `Servidor backend rodando em http://localhost:${PORT}`
     );
 });
+
+app.use(espress.static('public'));
+
+const poll = new Poll({
+    connectionString: process.env.DATABASE_URL,
+    ssl:{
+        rejectUnauthorized: false
+    }
+})
+
+Pool.connect()
+    .then(()=>console.log('?conectado com sucesso ao PostgreSQL(Supabase)'))
+    .catch(err=>{console.erro('?Erro de conexção com o supabase',err.stack)})
